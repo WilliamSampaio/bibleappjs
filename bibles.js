@@ -12,6 +12,17 @@ const bibles = {
     }
 }
 
+const ajax_bible_index = function (base_url) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `${base_url}/00.json`, false);
+    xhr.send(null);
+    if (xhr.status === 200) {
+        return JSON.parse(xhr.responseText);
+    } else {
+        throw new Error('Request failed: ' + xhr.statusText);
+    }
+}
+
 const populate_select_lang_availables = function (selector) {
     select_el = document.querySelector(selector);
     if (select_el === null) return false;
