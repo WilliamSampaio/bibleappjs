@@ -13,7 +13,7 @@ const translation = {
     }
 }
 
-const default_app_lang = "en-US";
+const default_app_lang = navigator.language || navigator.userLanguage;
 
 const url_params = new URLSearchParams(window.location.search);
 
