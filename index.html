@@ -7,6 +7,7 @@
     <title class="txt_title"></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <script src="translation.js"></script>
     <script src="bibles.js"></script>
 </head>
@@ -39,13 +40,49 @@
         </div>
     </nav>
 
-    <div class="container mt-3">
+    <div class="container mt-3" style="background-color: floralwhite;">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-3">
-                <select id="bibles_language" class="form-select"></select>
+                <div class="mb-3">
+                    <label for="bibles_language" class="form-label txt_bibles_language"></label>
+                    <select id="bibles_language" class="form-select"></select>
+                </div>
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-9">
-                <select id="bibles" class="form-select"></select>
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="mb-3">
+                    <label for="bibles" class="form-label txt_bibles"></label>
+                    <select id="bibles" class="form-select"></select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-3">
+                <div class="mb-3">
+                    <label for="books" class="form-label txt_books"></label>
+                    <select id="books" class="form-select"></select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-2">
+                <div class="mb-3">
+                    <label for="chapters" class="form-label txt_chapters"></label>
+                    <select id="chapters" class="form-select"></select>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-2">
+                <button class="btn btn-primary btn-md">Anterior</button>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-8 text-center">
+                <h2 id="book_title" class="book-title"></h2>
+                <h3 class="book-subtitle"><span class="txt_chapter"></span> <span id="book_chapter"></span></h3>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-2">
+                <button class="btn btn-primary btn-md">Próximo</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <ol id="verses"></ol>
             </div>
         </div>
     </div>
@@ -55,22 +92,54 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-
-    <script>
-        $.ajax(
-            {
-                url: "https://raw.githubusercontent.com/WilliamSampaio/pt-BR_ACF/main/data/01_1.json",
-                dataType: 'json',
-                success: function (response) {
-                    console.log(response)
-                }
-            }
-        )
-    </script>
     <script type="text/javascript">
+
+        function populate_select_chapters(selector) {
+            el = $(selector).empty();
+            for (let i = 1; i <= parseInt($('#books').val().split('_')[1]); i++) {
+                el.append(`<option value=${i}>${i}</option>`);
+            }
+        }
+
+        function populate_chapter(data) {
+            console.log(data);
+            $('#book_title').text(data['book']);
+            $('#book_chapter').text(data['chapter']);
+            $('#verses').empty();
+            for (verse of data.verses) {
+                $('#verses').append(`<li class='verse'>${verse}</li>`)
+            }
+        }
+
+        $('#bibles_language').on('change', function () {
+            populate_select_bibles('#bibles', $(this).val());
+        });
+
+        $('#bibles').on('change', function () {
+            populate_select_books('#books', $('#bibles_language').val(), $(this).val());
+        });
+
+        $('#books').on('change', function () {
+            populate_select_chapters('#chapters');
+        });
+
+        $('#chapters').on('change', function () {
+            data = get_chapter($('#bibles_language').val(), $('#bibles').val(), $('#books').val().split('_')[0], $('#chapters').val())
+            populate_chapter(data)
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             translate();
             populate_select_lang_availables('#bibles_language');
+            populate_select_bibles('#bibles', $('#bibles_language').val());
+            populate_select_books('#books', $('#bibles_language').val(), $('#bibles').val());
+            populate_select_chapters('#chapters');
+            get_chapter(
+                $('#bibles_language').val(),
+                $('#bibles').val(),
+                $('#books').val().split('_')[0],
+                $('#chapters').val()
+            );
         })
     </script>
 </body>

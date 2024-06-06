@@ -3,13 +3,23 @@ const translation = {
         "txt_hallo": "Hello World",
         "txt_title": "Bible Online",
         "txt_navbar_about": "About",
-        "txt_navbar_language": "Language"
+        "txt_navbar_language": "Language",
+        "txt_bibles_language": "Language:",
+        "txt_bibles": "Select the bible:",
+        "txt_books": "Select book:",
+        "txt_chapter": "Chapter",
+        "txt_chapters": "Chapters:"
     },
     "pt-BR": {
         "txt_hallo": "Olá Mundo",
         "txt_title": "Bíblia Online",
         "txt_navbar_about": "Sobre",
-        "txt_navbar_language": "Idioma"
+        "txt_navbar_language": "Idioma",
+        "txt_bibles_language": "Idioma:",
+        "txt_bibles": "Selecione a bíblia:",
+        "txt_books": "Selecione o livro:",
+        "txt_chapter": "Capítulo",
+        "txt_chapters": "Capítulos:"
     }
 }
 

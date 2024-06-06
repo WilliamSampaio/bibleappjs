@@ -1,0 +1,17 @@
+.verse {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 22pt;
+}
+
+.book-title {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bolder;
+    font-size: 28pt;
+    text-transform: uppercase;
+}
+
+.book-subtitle {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    font-size: 24pt;
+}
